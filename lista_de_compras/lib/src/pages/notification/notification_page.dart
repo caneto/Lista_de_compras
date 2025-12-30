@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
@@ -69,7 +70,7 @@ class NotificationPage extends StatelessWidget {
               // Buttons
               ElevatedButton(
                 onPressed: () {
-                  // Action for Enable Notifications
+                  context.go('/home');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4CAF50),
@@ -88,7 +89,7 @@ class NotificationPage extends StatelessWidget {
               const SizedBox(height: 12),
               TextButton(
                 onPressed: () {
-                  // Action for Maybe Later
+                  context.go('/home');
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.grey[200],

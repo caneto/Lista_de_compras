@@ -123,7 +123,7 @@ class OnboardingPage extends StatelessWidget {
                   const SizedBox(height: 12),
                   TextButton(
                     onPressed: () {
-                      // Action for Login
+                      context.go('/login');
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.grey[200],
