@@ -3,6 +3,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/privacy_dialog.dart';
+import '../../shared/daily_popup_service.dart';
+import '../../shared/daily_popup_widget.dart';
 import '../products/products_page.dart';
 import '../profile/profile_page.dart';
 
@@ -19,8 +21,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _checkPrivacyConsent();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _checkPrivacyConsent();
+      if (mounted) {
+        await _checkDailyPopup();
+      }
     });
   }
 
@@ -29,12 +34,30 @@ class _HomePageState extends State<HomePage> {
     final bool? accepted = prefs.getBool('privacy_accepted');
 
     if (accepted != true && mounted) {
-      showDialog(
+      await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => PrivacyConsentDialog(
           onAgree: () async {
             await prefs.setBool('privacy_accepted', true);
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
+        ),
+      );
+    }
+  }
+
+  Future<void> _checkDailyPopup() async {
+    final service = DailyPopupService();
+    if (await service.shouldShowPopup() && mounted) {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => DailyPopupWidget(
+          onConfirm: () async {
+            await service.markPopupAsShown();
             if (context.mounted) {
               Navigator.of(context).pop();
             }

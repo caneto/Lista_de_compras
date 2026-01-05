@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import '../../shared/widgets/login_cta_widget.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -46,46 +48,7 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Login CTA
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF4CAF50),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'ENTRAR',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        const Icon(
-                          Icons.chevron_right,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    const Text(
-                      'Faça login para compartilhar e sincronizar as listas',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const LoginCtaWidget(),
 
               const SizedBox(height: 32),
 
@@ -93,7 +56,9 @@ class ProfilePage extends StatelessWidget {
               _buildMenuItem(
                 icon: Icons.settings,
                 label: 'Configurações',
-                onTap: () {},
+                onTap: () {
+                  context.push('/settings');
+                },
               ),
               _buildMenuItem(
                 icon: Icons.palette,
